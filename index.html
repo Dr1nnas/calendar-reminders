@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendar &amp; Reminders</title>
+  <meta name="theme-color" content="#4f46e5">
+  <meta name="color-scheme" content="light dark">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="icon.svg" alt="" width="28" height="28">
+      <h1>Calendar</h1>
+    </div>
+    <div class="nav">
+      <button id="btn-today" class="btn">Today</button>
+      <button id="btn-prev" class="btn icon" aria-label="Previous">&#8249;</button>
+      <button id="btn-next" class="btn icon" aria-label="Next">&#8250;</button>
+      <h2 id="period-label" aria-live="polite"></h2>
+    </div>
+    <div class="actions">
+      <div class="seg" role="group" aria-label="View">
+        <button id="view-month" class="seg-btn active" data-view="month">Month</button>
+        <button id="view-week" class="seg-btn" data-view="week">Week</button>
+      </div>
+      <button id="btn-new-event" class="btn primary">+ Event</button>
+      <button id="btn-toggle-panel" class="btn panel-toggle" aria-label="Reminders">🔔<span class="lbl"> Reminders</span> <span id="badge" class="badge" hidden></span></button>
+      <details class="menu">
+        <summary class="btn icon" aria-label="More">&#8942;</summary>
+        <div class="menu-list">
+          <button id="btn-notify">Enable notifications</button>
+          <button id="btn-export">Export JSON</button>
+          <button id="btn-import">Import JSON</button>
+          <input id="import-file" type="file" accept="application/json,.json" hidden>
+        </div>
+      </details>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section id="calendar" class="calendar" aria-label="Calendar"></section>
+
+    <aside id="panel" class="panel">
+      <div class="panel-head">
+        <h3>Reminders</h3>
+        <button id="btn-new-reminder" class="btn primary small">+ Reminder</button>
+      </div>
+      <div id="notify-hint" class="hint" hidden></div>
+      <ul id="reminder-list" class="reminder-list"></ul>
+      <p id="reminder-empty" class="empty">No reminders yet.</p>
+    </aside>
+  </main>
+
+  <!-- Event modal -->
+  <dialog id="event-dialog" class="modal">
+    <form id="event-form" method="dialog">
+      <h3 id="event-dialog-title">New event</h3>
+      <label>Title<input name="title" required maxlength="200" autocomplete="off"></label>
+      <label>Date<input name="date" type="date" required></label>
+      <label class="check"><input name="allDay" type="checkbox"> All day</label>
+      <div class="row times">
+        <label>Start<input name="start" type="time" value="09:00"></label>
+        <label>End<input name="end" type="time" value="10:00"></label>
+      </div>
+      <label>Description<textarea name="description" rows="3"></textarea></label>
+      <div class="row">
+        <label>Color
+          <div class="colors" id="color-choices"></div>
+        </label>
+        <label>Reminder
+          <select name="reminder">
+            <option value="">None</option>
+            <option value="5">5 min before</option>
+            <option value="10">10 min before</option>
+            <option value="15">15 min before</option>
+            <option value="30">30 min before</option>
+            <option value="60">1 hour before</option>
+            <option value="1440">1 day before</option>
+          </select>
+        </label>
+      </div>
+      <p class="form-error" id="event-error" hidden></p>
+      <div class="modal-actions">
+        <button type="button" id="event-delete" class="btn danger">Delete</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Reminder modal -->
+  <dialog id="reminder-dialog" class="modal">
+    <form id="reminder-form" method="dialog">
+      <h3 id="reminder-dialog-title">New reminder</h3>
+      <label>Title<input name="title" required maxlength="200" autocomplete="off"></label>
+      <div class="row">
+        <label>Due date<input name="date" type="date" required></label>
+        <label>Time<input name="time" type="time" required></label>
+      </div>
+      <label>Note<textarea name="note" rows="3"></textarea></label>
+      <div class="modal-actions">
+        <button type="button" id="reminder-delete" class="btn danger">Delete</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn" data-close>Cancel</button>
+        <button type="submit" class="btn primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toasts" class="toasts" aria-live="assertive"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
