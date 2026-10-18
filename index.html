@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="locked">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,8 +10,20 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
   <link rel="stylesheet" href="style.css">
+  <script>try{if(sessionStorage.getItem("calrem.unlocked")==="1")document.documentElement.classList.remove("locked")}catch(e){}</script>
 </head>
 <body>
+  <div id="lock-screen" class="lock-screen">
+    <form id="lock-form" class="lock-card" autocomplete="off">
+      <img src="icon.svg" alt="" width="56" height="56">
+      <h1>Calendar</h1>
+      <p class="lock-sub">Enter your PIN to unlock</p>
+      <input id="lock-input" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="12"
+        autocomplete="off" aria-label="PIN" placeholder="••••" required>
+      <button id="lock-submit" type="submit" class="btn primary">Unlock</button>
+      <p id="lock-msg" class="lock-msg" aria-live="polite"></p>
+    </form>
+  </div>
   <header class="topbar">
     <div class="brand">
       <img src="icon.svg" alt="" width="28" height="28">
@@ -36,6 +48,7 @@
           <button id="btn-notify">Enable notifications</button>
           <button id="btn-export">Export JSON</button>
           <button id="btn-import">Import JSON</button>
+          <button id="btn-lock">Lock</button>
           <input id="import-file" type="file" accept="application/json,.json" hidden>
         </div>
       </details>
@@ -115,6 +128,7 @@
 
   <div id="toasts" class="toasts" aria-live="assertive"></div>
 
+  <script src="lock.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 /* Calendar & Reminders: vanilla JS, data in localStorage */
-(() => {
+window.whenUnlocked(() => {
   'use strict';
 
   // ---------- Storage ----------
@@ -479,6 +479,7 @@
   $('#btn-export').addEventListener('click', exportJson);
   $('#btn-import').addEventListener('click', () => { $('#import-file').click(); $('.menu').open = false; });
   $('#import-file').addEventListener('change', (e) => { if (e.target.files[0]) importJson(e.target.files[0]); e.target.value = ''; });
+  $('#btn-lock').addEventListener('click', () => window.lockApp());
   $('#btn-toggle-panel').addEventListener('click', () => $('#panel').classList.toggle('open'));
   document.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => b.closest('dialog').close()));
   document.querySelectorAll('dialog').forEach((d) => d.addEventListener('click', (e) => { if (e.target === d) d.close(); }));
@@ -509,4 +510,4 @@
   updateNotifyUi();
   render();
   checkDue();
-})();
+});

@@ -13,6 +13,7 @@ A simple, fast calendar and reminders web app. Plain HTML, CSS and JavaScript: n
 - **Saved data**: everything is stored in your browser's `localStorage`. Use **Export JSON** / **Import JSON** (⋮ menu) to back up your data or move it to another device; import can replace or merge.
 - **Installable**: web app manifest + service worker (works offline after the first visit). Use "Add to Home Screen" on your phone.
 - Responsive layout for desktop and phone, follows the system light/dark mode.
+- **PIN lock screen**: the app stays hidden until the PIN is entered. After 3 wrong tries this browser is locked out for 15 minutes, with a countdown. Once unlocked, reloads in the same tab don't ask again, and **Lock** in the ⋮ menu locks it again. The repo stores only a salted SHA-256 hash, never the PIN itself. This is *not* real security: it all runs in the browser, so anyone technical can get past it. It only keeps casual visitors out.
 - Keyboard shortcuts: `←`/`→` previous/next, `t` today, `m` month, `w` week, `n` new event.
 
 > Note: browsers only run the reminder check while the page (or installed app) is open. Data stays in the browser you use, so export a backup to move it.
@@ -35,6 +36,7 @@ python3 -m http.server 8000
 - `index.html`: markup and modals
 - `style.css`: styles (light/dark, responsive)
 - `app.js`: calendar, reminders, storage, notifications
+- `lock.js`: PIN lock screen
 - `sw.js`: service worker (offline cache, notification clicks)
 - `manifest.json`, `icon.svg`: install metadata
 
